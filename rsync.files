@@ -111,6 +111,7 @@
 ./bitnami/consul/templates/consul-service.yaml
 ./bitnami/consul/templates/gossip-secret.yaml
 ./bitnami/consul/templates/ingress.yaml
+./bitnami/consul/templates/metrics-svc.yaml
 ./bitnami/consul/templates/pod-dist-budget.yaml
 ./bitnami/consul/templates/statefulset.yaml
 ./bitnami/consul/templates/ui-service.yaml
@@ -678,6 +679,8 @@
 ./bitnami/mariadb/Chart.yaml
 ./bitnami/mariadb/README.md
 ./bitnami/mariadb/ci/values-production-with-rbac.yaml
+./bitnami/mariadb/custom-values.yaml
+./bitnami/mariadb/deploy.sh
 ./bitnami/mariadb/files/docker-entrypoint-initdb.d/README.md
 ./bitnami/mariadb/templates/NOTES.txt
 ./bitnami/mariadb/templates/_helpers.tpl
@@ -1538,6 +1541,7 @@
 ./bitnami/wordpress/Chart.yaml
 ./bitnami/wordpress/README.md
 ./bitnami/wordpress/ci/ct-values.yaml
+./bitnami/wordpress/deploy.sh
 ./bitnami/wordpress/requirements.lock
 ./bitnami/wordpress/requirements.yaml
 ./bitnami/wordpress/templates/NOTES.txt
@@ -1572,6 +1576,7 @@
 ./bitnami/zookeeper/templates/svc.yaml
 ./bitnami/zookeeper/values-production.yaml
 ./bitnami/zookeeper/values.yaml
+./fav.log.sort
 ./githooks/functions/libchartversion.sh
 ./githooks/functions/libhelmlint.sh
 ./githooks/functions/libkubeval.sh
@@ -1584,4 +1589,5 @@
 ./includefile.conf
 ./prunefile.conf
 ./prunefix.conf
+./rsync.files
 ./setup.cfg
