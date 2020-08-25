@@ -1,9 +1,9 @@
 db:
-    user: my_user
-    name: my_database
-    master:
-        persistence:
-            storageClass: gluster-heketi
-            slave:
-                persistence:
-                    storageClass: gluster-heketi
+  user: my_user
+  name: my_database
+master:
+  persistence:
+    storageClass: gluster-heketi
+slave:
+  persistence:
+    storageClass: gluster-heketi
