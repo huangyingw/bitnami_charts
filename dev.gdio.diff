@@ -13,32 +13,3 @@ index 000000000..67948a072
 +slave:
 +  persistence:
 +    storageClass: gluster-heketi
-diff --git a/bitnami/mariadb/deploy.sh b/bitnami/mariadb/deploy.sh
-new file mode 100755
-index 000000000..4a84e120b
---- /dev/null
-+++ ./bitnami/mariadb/deploy.sh
-@@ -0,0 +1,9 @@
-+#!/bin/zsh
-+SCRIPT=$(realpath "$0")
-+SCRIPTPATH=$(dirname "$SCRIPT")
-+cd "$SCRIPTPATH"
-+
-+helm uninstall mariadb
-+# helm install mariadb ./ --set master.persistence.storageClass=gluster-heketi,slave.persistence.storageClass=gluster-heketi
-+export MY_PASSWORD=my-pass
-+helm install mariadb ./ --values ./custom-values.yaml --set db.password=$MY_PASSWORD
-diff --git a/bitnami/wordpress/deploy.sh b/bitnami/wordpress/deploy.sh
-new file mode 100755
-index 000000000..ccd407397
---- /dev/null
-+++ ./bitnami/wordpress/deploy.sh
-@@ -0,0 +1,8 @@
-+#!/bin/zsh
-+SCRIPT=$(realpath "$0")
-+SCRIPTPATH=$(dirname "$SCRIPT")
-+cd "$SCRIPTPATH"
-+
-+#helm dependency update ./
-+helm uninstall wordpress
-+helm install wordpress ./
