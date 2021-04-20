@@ -10,7 +10,7 @@
     remote = bitnami
     branch = master
 [merge]
-    allow = true
+	allow = true
 [branch "dev"]
     remote = origin
     merge = refs/heads/dev
@@ -19,6 +19,10 @@
     merge = refs/heads/master
 [gdif]
     ignore = *.gdio.diff
+    ignore = *.lock
+    ignore = bitnami/mariadb/deploy.sh
+    ignore = bitnami/wordpress/deploy.sh
+    ignore = readme
 [deploy]
 	host = localhost
 	path = ~/myproject/git/Kubernetes/bitnami/charts
