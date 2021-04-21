@@ -911,6 +911,7 @@
 ./bitnami/mediawiki/templates/_helpers.tpl
 ./bitnami/mediawiki/templates/deployment.yaml
 ./bitnami/mediawiki/templates/externaldb-secrets.yaml
+./bitnami/mediawiki/templates/extra-list.yaml
 ./bitnami/mediawiki/templates/ingress.yaml
 ./bitnami/mediawiki/templates/mediawiki-pvc.yaml
 ./bitnami/mediawiki/templates/secrets.yaml
@@ -1149,6 +1150,7 @@
 ./bitnami/nginx-ingress-controller/README.md
 ./bitnami/nginx-ingress-controller/ci/ct-values.yaml
 ./bitnami/nginx-ingress-controller/ci/values-production-with-psp.yaml
+./bitnami/nginx-ingress-controller/deploy.sh
 ./bitnami/nginx-ingress-controller/templates/NOTES.txt
 ./bitnami/nginx-ingress-controller/templates/_helpers.tpl
 ./bitnami/nginx-ingress-controller/templates/addheaders-configmap.yaml
@@ -1780,11 +1782,14 @@
 ./bitnami/tomcat/ci/values-with-ingress-and-initcontainers.yaml
 ./bitnami/tomcat/templates/NOTES.txt
 ./bitnami/tomcat/templates/_helpers.tpl
+./bitnami/tomcat/templates/_pod.tpl
 ./bitnami/tomcat/templates/deployment.yaml
 ./bitnami/tomcat/templates/extra-list.yaml
 ./bitnami/tomcat/templates/ingress.yaml
 ./bitnami/tomcat/templates/pvc.yaml
 ./bitnami/tomcat/templates/secrets.yaml
+./bitnami/tomcat/templates/statefulset.yaml
+./bitnami/tomcat/templates/svc-headless.yaml
 ./bitnami/tomcat/templates/svc.yaml
 ./bitnami/tomcat/templates/tls-secrets.yaml
 ./bitnami/tomcat/values.yaml
