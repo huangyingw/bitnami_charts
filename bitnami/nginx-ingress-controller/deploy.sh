@@ -3,5 +3,6 @@ SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH"
 
-helm uninstall wordpress
-helm install wordpress ./ --set global.storageClass=openebs-hostpath
+helm dependency update ./
+helm uninstall nginx-ingress-controller
+helm install nginx-ingress-controller ./
