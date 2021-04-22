@@ -20,8 +20,7 @@
 [gdif]
     ignore = *.gdio.diff
     ignore = *.lock
-    ignore = bitnami/mariadb/deploy.sh
-    ignore = bitnami/wordpress/deploy.sh
+    ignore = */deploy.sh
     ignore = readme
 [deploy]
 	host = localhost
