@@ -1,0 +1,3 @@
+➜  charts git:(dev) ✗ kubectl get svc contour-envoy --namespace default -w
+NAME            TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+contour-envoy   LoadBalancer   10.106.206.176   <pending>     80:32763/TCP,443:30003/TCP   53s
