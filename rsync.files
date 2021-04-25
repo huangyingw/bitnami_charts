@@ -149,6 +149,7 @@
 ./bitnami/contour/Chart.yaml
 ./bitnami/contour/README.md
 ./bitnami/contour/ci/ct-values.yaml
+./bitnami/contour/deploy.sh
 ./bitnami/contour/resources/extensionservices.yaml
 ./bitnami/contour/resources/httpproxies.yaml
 ./bitnami/contour/resources/tlscertificatedeligations.yaml
@@ -655,6 +656,7 @@
 ./bitnami/kong/ci/values-ingress.yaml
 ./bitnami/kong/ci/values-metrics-hpa-pdb.yaml
 ./bitnami/kong/crds/custom-resource-definitions.yaml
+./bitnami/kong/deploy.sh
 ./bitnami/kong/templates/NOTES.txt
 ./bitnami/kong/templates/_helpers.tpl
 ./bitnami/kong/templates/deployment.yaml
@@ -1919,6 +1921,7 @@
 ./includefile.conf
 ./prunefile.conf
 ./prunefix.conf
+./readme
 ./rsync.files
 ./setup.cfg
 ./template/CHART_NAME/.helmignore
