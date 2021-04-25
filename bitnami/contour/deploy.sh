@@ -4,5 +4,5 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH"
 
 helm dependency update ./
-helm uninstall nginx-ingress-controller
-helm install nginx-ingress-controller ./
+helm uninstall contour
+helm install contour ./
