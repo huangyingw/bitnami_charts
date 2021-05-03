@@ -511,6 +511,7 @@
 ./bitnami/jenkins/README.md
 ./bitnami/jenkins/ci/ct-values.yaml
 ./bitnami/jenkins/ci/values-with-metrics-and-ingress.yaml
+./bitnami/jenkins/deploy.sh
 ./bitnami/jenkins/templates/NOTES.txt
 ./bitnami/jenkins/templates/_helpers.tpl
 ./bitnami/jenkins/templates/deployment.yaml
