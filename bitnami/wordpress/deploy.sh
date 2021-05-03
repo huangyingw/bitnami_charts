@@ -3,18 +3,7 @@ SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH"
 
-# helm dependency update ./
+helm dependency update ./
 helm uninstall wordpress
 helm install wordpress ./ --set global.storageClass=openebs-hostpath
 # helm install wordpress ./ --set global.storageClass=openebs-hostpath,mariadb.primary.persistence.storageClass=openebs-hostpath
-
-'
-kubectl get persistentvolumeclaims
-NAME                       STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-data-wordpress-mariadb-0   Pending                                                     11h
-kubectl get persistentvolumes
-No resources found in default namespace.
-
-../mariadb/templates/master-statefulset.yaml:321:          persistentVolumeClaim:
-templates/deployment.yaml:228:          persistentVolumeClaim:
-'
