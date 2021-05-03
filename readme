@@ -12,10 +12,6 @@ Error: failed post-install: timed out waiting for the condition
 
 deploy.sh
 
-➜  charts git:(dev) ✗ kubectl get svc contour-envoy --namespace default -w
-NAME            TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-contour-envoy   LoadBalancer   10.106.206.176   <pending>     80:32763/TCP,443:30003/TCP   53s
-
 ➜  charts git:(dev) ✗ kubectl get --namespace default svc -w nginx-ingress-controller
 NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
 nginx-ingress-controller   LoadBalancer   10.108.220.65   <pending>     80:32580/TCP,443:30958/TCP   9m12s
