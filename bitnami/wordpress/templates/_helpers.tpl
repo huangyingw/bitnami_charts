@@ -5,7 +5,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "wordpress.mariadb.fullname" -}}
-{{- printf "%s-mariadb" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "mariadb" "chartValues" .Values.mariadb "context" $) -}}
 {{- end -}}
 
 {{/*
@@ -13,7 +13,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "wordpress.memcached.fullname" -}}
-{{- printf "%s-memcached" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "memcached" "chartValues" .Values.memcached "context" $) -}}
 {{- end -}}
 
 {{/*
@@ -42,6 +42,17 @@ Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "wordpress.imagePullSecrets" -}}
 {{- include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.metrics.image .Values.volumePermissions.image) "global" .Values.global) -}}
+{{- end -}}
+
+{{/*
+ Create the name of the service account to use
+ */}}
+{{- define "wordpress.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
 {{- end -}}
 
 {{/*
@@ -150,7 +161,7 @@ Return the MariaDB Secret Name
         {{- printf "%s" (include "wordpress.mariadb.fullname" .) -}}
     {{- end -}}
 {{- else if .Values.externalDatabase.existingSecret -}}
-    {{- printf "%s" .Values.externalDatabase.existingSecret -}}
+    {{- include "common.tplvalues.render" (dict "value" .Values.externalDatabase.existingSecret "context" $) -}}
 {{- else -}}
     {{- printf "%s-externaldb" (include "common.names.fullname" .) -}}
 {{- end -}}

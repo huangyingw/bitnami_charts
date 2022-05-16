@@ -15,8 +15,8 @@ $ helm install my-release bitnami/%%CHART_NAME%%
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 3.1.0
+- Kubernetes 1.19+
+- Helm 3.2.0+
 - PV provisioner support in the underlying infrastructure
 - ReadWriteMany volumes for deployment scaling
 
@@ -25,7 +25,7 @@ $ helm install my-release bitnami/%%CHART_NAME%%
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release bitnami/%%CHART_NAME%%s
+helm install my-release bitnami/%%CHART_NAME%%
 ```
 
 The command deploys %%CHART_NAME%% on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
@@ -44,7 +44,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
-See https://github.com/bitnami-labs/readmenator to create the table
+See https://github.com/bitnami-labs/readme-generator-for-helm to create the table
 
 The above parameters map to the env variables defined in [bitnami/%%CHART_NAME%%](http://github.com/bitnami/bitnami-docker-%%CHART_NAME%%). For more information please refer to the [bitnami/%%CHART_NAME%%](http://github.com/bitnami/bitnami-docker-%%CHART_NAME%%) image documentation.
 
@@ -97,7 +97,7 @@ externalDatabase.port=3306
 
 %%IF NEEDED%%
 
-This chart provides support for Ingress resources. If an Ingress controller, such as [nginx-ingress](https://kubeapps.com/charts/stable/nginx-ingress) or [traefik](https://kubeapps.com/charts/stable/traefik), that Ingress controller can be used to serve %%CHART_NAME%%.
+This chart provides support for Ingress resources. If you have an ingress controller installed on your cluster, such as [nginx-ingress-controller](https://github.com/bitnami/charts/tree/master/bitnami/nginx-ingress-controller) or [contour](https://github.com/bitnami/charts/tree/master/bitnami/contour) you can utilize the ingress controller to serve your application.
 
 To enable Ingress integration, set `ingress.enabled` to `true`. The `ingress.hostname` property can be used to set the host name. The `ingress.tls` parameter can be used to add the TLS configuration for this host. It is also possible to have more than one host, with a separate TLS configuration for each host. [Learn more about configuring and using Ingress](https://docs.bitnami.com/kubernetes/apps/%%CHART_NAME%%/configuration/configure-use-ingress/).
 
@@ -137,3 +137,19 @@ As an alternative, use one of the preset configurations for pod affinity, pod an
 ## Troubleshooting
 
 Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
+
+## License
+
+Copyright &copy; 2022 Bitnami
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

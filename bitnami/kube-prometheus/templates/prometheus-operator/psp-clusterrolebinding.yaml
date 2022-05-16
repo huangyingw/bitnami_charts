@@ -1,8 +1,10 @@
-{{- if and .Values.operator.enabled .Values.rbac.create .Values.rbac.pspEnabled }}
+{{- $pspAvailable := (semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)) -}}
+{{- if and $pspAvailable .Values.operator.enabled .Values.rbac.create .Values.rbac.pspEnabled }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: {{ template "kube-prometheus.operator.fullname" . }}-psp
+  namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "kube-prometheus.operator.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -11,5 +13,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ template "kube-prometheus.operator.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ .Release.Namespace | quote }}
 {{- end }}

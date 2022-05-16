@@ -1,34 +1,34 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 1.0.1
 dependencies:
-  - condition: kafka.enabled
-    name: kafka
-    repository: https://charts.bitnami.com/bitnami
-    version: 12.x.x
-  - condition: spark.enabled
-    name: spark
-    repository: https://charts.bitnami.com/bitnami
-    version: 5.x.x
-  - condition: elasticsearch.enabled
-    name: elasticsearch
-    repository: https://charts.bitnami.com/bitnami
-    version: 15.x.x
-  - condition: logstash.enabled
-    name: logstash
-    repository: https://charts.bitnami.com/bitnami
-    version: 3.x.x
   - condition: wavefront.enabled
     name: wavefront
     repository: https://charts.bitnami.com/bitnami
-    version: 2.x.x
+    version: 3.x.x
+  - condition: spark.enabled
+    name: spark
+    repository: https://charts.bitnami.com/bitnami
+    version: 6.x.x
+  - condition: logstash.enabled
+    name: logstash
+    repository: https://charts.bitnami.com/bitnami
+    version: 4.x.x
+  - condition: kafka.enabled
+    name: kafka
+    repository: https://charts.bitnami.com/bitnami
+    version: 16.x.x
+  - condition: elasticsearch.enabled
+    name: elasticsearch
+    repository: https://charts.bitnami.com/bitnami
+    version: 18.x.x
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
     version: 1.x.x
-description: OCTO Data platform Kafka-Spark-Elasticsearch Helm Chart
+description: This Helm chart can be used for the automated deployment of a data platform blueprint containing Kafka, Apache Spark and Elasticsearch. It covers optimized pod sizing and placement diversity rules.
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/dataplatform-bp2
 icon: https://bitnami.com/assets/stacks/dataplatform-bp1/img/dataplatform-bp1-stack-220x234.png
@@ -58,4 +58,4 @@ sources:
   - https://www.elastic.co/products/logstash
   - https://zookeeper.apache.org/
   - https://github.com/bitnami/bitnami-docker-zookeeper
-version: 0.3.0
+version: 13.0.1
