@@ -8,7 +8,7 @@
     remote = origin
 [gsync]
     remote = bitnami
-    branch = master
+    target = bitnami/master
 [merge]
 	allow = true
 [branch "dev"]
