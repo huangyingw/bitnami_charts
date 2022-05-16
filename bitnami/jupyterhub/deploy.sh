@@ -4,5 +4,5 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH"
 
 helm dependency update ./
-helm uninstall wordpress
-helm install wordpress ./ --set global.storageClass=openebs-hostpath
+helm uninstall jupyterhub
+helm install jupyterhub ./ --set singleuser.persistence.storageClass=openebs-hostpath,postgresql.persistence.storageClass=openebs-hostpath
