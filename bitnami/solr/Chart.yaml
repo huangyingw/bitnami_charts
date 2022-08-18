@@ -1,12 +1,12 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
-appVersion: 8.11.1
+appVersion: 9.0.0
 dependencies:
   - condition: zookeeper.enabled
     name: zookeeper
     repository: https://charts.bitnami.com/bitnami
-    version: 9.x.x
+    version: 10.x.x
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
@@ -21,10 +21,10 @@ keywords:
   - zookeeper
   - apache
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: solr
 sources:
-  - https://github.com/bitnami/bitnami-docker-solr
+  - https://github.com/bitnami/containers/tree/main/bitnami/solr
   - https://lucene.apache.org/solr/
-version: 4.0.12
+version: 6.0.7

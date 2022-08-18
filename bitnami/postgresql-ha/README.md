@@ -24,6 +24,8 @@ This Helm chart has been developed based on [bitnami/postgresql](https://github.
 - A new deployment, service have been added to deploy [Pgpool-II](https://pgpool.net/mediawiki/index.php/Main_Page) to act as proxy for PostgreSQL backend. It helps to reduce connection overhead, acts as a load balancer for PostgreSQL, and ensures database node failover.
 - Replacing `bitnami/postgresql` with `bitnami/postgresql-repmgr` which includes and configures [repmgr](https://repmgr.org/). Repmgr ensures standby nodes assume the primary role when the primary node is unhealthy.
 
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
+
 ## Prerequisites
 
 - Kubernetes 1.19+
@@ -94,7 +96,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
 | `postgresql.image.registry`                                  | PostgreSQL with Repmgr image registry                                                                                                                                                                         | `docker.io`                 |
 | `postgresql.image.repository`                                | PostgreSQL with Repmgr image repository                                                                                                                                                                       | `bitnami/postgresql-repmgr` |
-| `postgresql.image.tag`                                       | PostgreSQL with Repmgr image tag                                                                                                                                                                              | `14.2.0-debian-10-r22`      |
+| `postgresql.image.tag`                                       | PostgreSQL with Repmgr image tag                                                                                                                                                                              | `14.4.0-debian-11-r21`      |
 | `postgresql.image.pullPolicy`                                | PostgreSQL with Repmgr image pull policy                                                                                                                                                                      | `IfNotPresent`              |
 | `postgresql.image.pullSecrets`                               | Specify docker-registry secret names as an array                                                                                                                                                              | `[]`                        |
 | `postgresql.image.debug`                                     | Specify if debug logs should be enabled                                                                                                                                                                       | `false`                     |
@@ -115,7 +117,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `postgresql.affinity`                                        | Affinity for PostgreSQL pods assignment                                                                                                                                                                       | `{}`                        |
 | `postgresql.nodeSelector`                                    | Node labels for PostgreSQL pods assignment                                                                                                                                                                    | `{}`                        |
 | `postgresql.tolerations`                                     | Tolerations for PostgreSQL pods assignment                                                                                                                                                                    | `[]`                        |
-| `postgresql.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template                                                                                      | `{}`                        |
+| `postgresql.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template                                                                                      | `[]`                        |
 | `postgresql.priorityClassName`                               | Pod priority class                                                                                                                                                                                            | `""`                        |
 | `postgresql.schedulerName`                                   | Use an alternate scheduler, e.g. "stork".                                                                                                                                                                     | `""`                        |
 | `postgresql.terminationGracePeriodSeconds`                   | Seconds PostgreSQL pod needs to terminate gracefully                                                                                                                                                          | `""`                        |
@@ -216,7 +218,6 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `postgresql.tls.certificatesSecret`                          | Name of an existing secret that contains the certificates                                                                                                                                                     | `""`                        |
 | `postgresql.tls.certFilename`                                | Certificate filename                                                                                                                                                                                          | `""`                        |
 | `postgresql.tls.certKeyFilename`                             | Certificate key filename                                                                                                                                                                                      | `""`                        |
-| `postgresql.tls.certCAFilename`                              | CA Certificate filename                                                                                                                                                                                       | `""`                        |
 
 
 ### Pgpool parameters
@@ -225,7 +226,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
 | `pgpool.image.registry`                                  | Pgpool image registry                                                                                                                    | `docker.io`           |
 | `pgpool.image.repository`                                | Pgpool image repository                                                                                                                  | `bitnami/pgpool`      |
-| `pgpool.image.tag`                                       | Pgpool image tag                                                                                                                         | `4.3.1-debian-10-r45` |
+| `pgpool.image.tag`                                       | Pgpool image tag                                                                                                                         | `4.3.2-debian-11-r22` |
 | `pgpool.image.pullPolicy`                                | Pgpool image pull policy                                                                                                                 | `IfNotPresent`        |
 | `pgpool.image.pullSecrets`                               | Specify docker-registry secret names as an array                                                                                         | `[]`                  |
 | `pgpool.image.debug`                                     | Specify if debug logs should be enabled                                                                                                  | `false`               |
@@ -255,6 +256,9 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `pgpool.replicaCount`                                    | The number of replicas to deploy                                                                                                         | `1`                   |
 | `pgpool.podAnnotations`                                  | Additional pod annotations                                                                                                               | `{}`                  |
 | `pgpool.priorityClassName`                               | Pod priority class                                                                                                                       | `""`                  |
+| `pgpool.schedulerName`                                   | Use an alternate scheduler, e.g. "stork".                                                                                                | `""`                  |
+| `pgpool.terminationGracePeriodSeconds`                   | Seconds pgpool pod needs to terminate gracefully                                                                                         | `""`                  |
+| `pgpool.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template                 | `[]`                  |
 | `pgpool.podAffinityPreset`                               | Pgpool pod affinity preset. Ignored if `pgpool.affinity` is set. Allowed values: `soft` or `hard`                                        | `""`                  |
 | `pgpool.podAntiAffinityPreset`                           | Pgpool pod anti-affinity preset. Ignored if `pgpool.affinity` is set. Allowed values: `soft` or `hard`                                   | `soft`                |
 | `pgpool.nodeAffinityPreset.type`                         | Pgpool node affinity preset type. Ignored if `pgpool.affinity` is set. Allowed values: `soft` or `hard`                                  | `""`                  |
@@ -297,6 +301,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `pgpool.minReadySeconds`                                 | How many seconds a pod needs to be ready before killing the next, during update                                                          | `""`                  |
 | `pgpool.adminUsername`                                   | Pgpool Admin username                                                                                                                    | `admin`               |
 | `pgpool.adminPassword`                                   | Pgpool Admin password                                                                                                                    | `""`                  |
+| `pgpool.usePasswordFile`                                 | Set to `true` to mount pgpool secret as a file instead of passing environment variable                                                   | `""`                  |
 | `pgpool.authenticationMethod`                            | Pgpool authentication method. Use 'md5' for PSQL < 14.                                                                                   | `scram-sha-256`       |
 | `pgpool.logConnections`                                  | Log all client connections (PGPOOL_ENABLE_LOG_CONNECTIONS)                                                                               | `false`               |
 | `pgpool.logHostname`                                     | Log the client hostname instead of IP address (PGPOOL_ENABLE_LOG_HOSTNAME)                                                               | `true`                |
@@ -333,7 +338,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `ldap.enabled`                  | Enable LDAP support                                          | `false`      |
 | `ldap.existingSecret`           | Name of existing secret to use for LDAP passwords            | `""`         |
 | `ldap.uri`                      | LDAP URL beginning in the form `ldap[s]://<hostname>:<port>` | `""`         |
-| `ldap.base`                     | LDAP base DN                                                 | `""`         |
+| `ldap.basedn`                   | LDAP base DN                                                 | `""`         |
 | `ldap.binddn`                   | LDAP bind DN                                                 | `""`         |
 | `ldap.bindpw`                   | LDAP bind password                                           | `""`         |
 | `ldap.bslookup`                 | LDAP base lookup                                             | `""`         |
@@ -362,7 +367,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `metrics.enabled`                            | Enable PostgreSQL Prometheus exporter                                                                                                                     | `false`                     |
 | `metrics.image.registry`                     | PostgreSQL Prometheus exporter image registry                                                                                                             | `docker.io`                 |
 | `metrics.image.repository`                   | PostgreSQL Prometheus exporter image repository                                                                                                           | `bitnami/postgres-exporter` |
-| `metrics.image.tag`                          | PostgreSQL Prometheus exporter image tag                                                                                                                  | `0.10.1-debian-10-r75`      |
+| `metrics.image.tag`                          | PostgreSQL Prometheus exporter image tag                                                                                                                  | `0.10.1-debian-11-r22`      |
 | `metrics.image.pullPolicy`                   | PostgreSQL Prometheus exporter image pull policy                                                                                                          | `IfNotPresent`              |
 | `metrics.image.pullSecrets`                  | Specify docker-registry secret names as an array                                                                                                          | `[]`                        |
 | `metrics.image.debug`                        | Specify if debug logs should be enabled                                                                                                                   | `false`                     |
@@ -424,7 +429,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `volumePermissions.enabled`                      | Enable init container to adapt volume permissions   | `false`                 |
 | `volumePermissions.image.registry`               | Init container volume-permissions image registry    | `docker.io`             |
 | `volumePermissions.image.repository`             | Init container volume-permissions image repository  | `bitnami/bitnami-shell` |
-| `volumePermissions.image.tag`                    | Init container volume-permissions image tag         | `10-debian-10-r387`     |
+| `volumePermissions.image.tag`                    | Init container volume-permissions image tag         | `11-debian-11-r22`      |
 | `volumePermissions.image.pullPolicy`             | Init container volume-permissions image pull policy | `IfNotPresent`          |
 | `volumePermissions.image.pullSecrets`            | Specify docker-registry secret names as an array    | `[]`                    |
 | `volumePermissions.podSecurityContext.runAsUser` | Init container volume-permissions User ID           | `0`                     |
@@ -443,6 +448,7 @@ Additionally, if `persistence.resourcePolicy` is set to `keep`, you should manua
 | `persistence.accessModes`   | List of access modes of data volume                                                     | `["ReadWriteOnce"]`   |
 | `persistence.size`          | Persistent Volume Claim size                                                            | `8Gi`                 |
 | `persistence.annotations`   | Persistent Volume Claim annotations                                                     | `{}`                  |
+| `persistence.labels`        | Persistent Volume Claim labels                                                          | `{}`                  |
 | `persistence.selector`      | Selector to match an existing Persistent Volume (this value is evaluated as a template) | `{}`                  |
 
 
@@ -584,7 +590,7 @@ In addition to this option, you can also set an external ConfigMap with all the 
 
 ### Initialize a fresh instance
 
-The [Bitnami PostgreSQL with Repmgr](https://github.com/bitnami/bitnami-docker-postgresql-repmgr) image allows you to use your custom scripts to initialize a fresh instance. You can specify custom scripts using the `initdbScripts` parameter as dict so they can be consumed as a ConfigMap.
+The [Bitnami PostgreSQL with Repmgr](https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr) image allows you to use your custom scripts to initialize a fresh instance. You can specify custom scripts using the `initdbScripts` parameter as dict so they can be consumed as a ConfigMap.
 
 In addition to this option, you can also set an external ConfigMap with all the initialization scripts. This is done by setting the `initdbScriptsCM` parameter. Note that this will override the two previous options. If your initialization scripts contain sensitive information such as credentials or passwords, you can use the `initdbScriptsSecret` parameter.
 
@@ -592,7 +598,7 @@ The above parameters (`initdbScripts`, `initdbScriptsCM`, and `initdbScriptsSecr
 
 The allowed extensions are `.sh`, `.sql` and `.sql.gz` in the **postgresql** container while only `.sh` in the case of the **pgpool** one.
 
-+info: https://github.com/bitnami/bitnami-docker-postgresql#initializing-a-new-instance and https://github.com/bitnami/bitnami-docker-pgpool#initializing-with-custom-scripts
++info: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#initializing-a-new-instance and https://github.com/bitnami/containers/tree/main/bitnami/pgpool#initializing-with-custom-scripts
 
 ### Use of global variables
 
@@ -657,11 +663,11 @@ It's necessary to specify the existing passwords while performing a upgrade to e
 
 ```bash
 $ helm upgrade my-release bitnami/postgresql-ha \
-    --set postgresql.password=[POSTGRESQL_PASSWORD] \
+    --set postgresql.password=[POSTGRES_PASSWORD] \
     --set postgresql.repmgrPassword=[REPMGR_PASSWORD]
 ```
 
-> Note: you need to substitute the placeholders _[POSTGRESQL_PASSWORD]_, and _[REPMGR_PASSWORD]_ with the values obtained from instructions in the installation notes.
+> Note: you need to substitute the placeholders _[POSTGRES_PASSWORD]_, and _[REPMGR_PASSWORD]_ with the values obtained from instructions in the installation notes.
 
 > Note: As general rule, it is always wise to do a backup before the upgrading procedures.
 
@@ -821,7 +827,7 @@ $ helm upgrade my-release --version 3.0.0 bitnami/postgresql-ha \
 
 ### To 2.0.0
 
-The [Bitnami Pgpool](https://github.com/bitnami/bitnami-docker-pgpool) image was migrated to a "non-root" user approach. Previously the container ran as the `root` user and the Pgpool daemon was started as the `pgpool` user. From now on, both the container and the Pgpool daemon run as user `1001`. You can revert this behavior by setting the parameters `pgpool.containerSecurityContext.runAsUser`, and `pgpool.securityContext.fsGroup` to `0`.
+The [Bitnami Pgpool](https://github.com/bitnami/containers/tree/main/bitnami/pgpool) image was migrated to a "non-root" user approach. Previously the container ran as the `root` user and the Pgpool daemon was started as the `pgpool` user. From now on, both the container and the Pgpool daemon run as user `1001`. You can revert this behavior by setting the parameters `pgpool.containerSecurityContext.runAsUser`, and `pgpool.securityContext.fsGroup` to `0`.
 
 Consequences:
 

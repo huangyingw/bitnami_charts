@@ -76,8 +76,8 @@ data:
     #!/bin/bash
 
     ID="${MY_POD_NAME#"{{ $fullname }}-"}"
-    if [[ -f "/bitnami/kafka/data/meta.properties" ]]; then
-        export KAFKA_CFG_BROKER_ID="$(grep "broker.id" /bitnami/kafka/data/meta.properties | awk -F '=' '{print $2}')"
+    if [[ -f "/opt/bitnami/kafka/logs/meta.properties" ]]; then
+        export KAFKA_CFG_BROKER_ID="$(grep "broker.id" /opt/bitnami/kafka/logs/meta.properties | awk -F '=' '{print $2}')"
     else
         export KAFKA_CFG_BROKER_ID="$((ID + {{ .Values.minBrokerId }}))"
     fi
@@ -177,6 +177,19 @@ data:
     fi
     export KAFKA_TLS_TRUSTSTORE_FILE="/opt/bitnami/kafka/config/certs/kafka.truststore.pem"
     {{- end }}
+    {{- end }}
+
+    # Configure zookeeper client
+    {{- if and (not (empty .Values.auth.zookeeper.tls.existingSecret)) .Values.auth.zookeeper.tls.enabled }}
+    JKS_TRUSTSTORE={{ printf "/kafka-zookeeper-cert/%s" (.Values.auth.zookeeper.tls.existingSecretTruststoreKey) | quote }}
+    JKS_KEYSTORE={{ printf "/kafka-zookeeper-cert/%s" (.Values.auth.zookeeper.tls.existingSecretKeystoreKey) | quote }}
+    if [[ -f "$JKS_TRUSTSTORE" ]] && [[ -f "$JKS_KEYSTORE" ]]; then
+      CERT_DIR="/opt/bitnami/kafka/config/certs"
+      TRUSTSTORE_LOCATION="${CERT_DIR}/zookeeper.truststore.jks"
+      cp "$JKS_TRUSTSTORE" "$TRUSTSTORE_LOCATION"
+      cp "$JKS_KEYSTORE" "${CERT_DIR}/zookeeper.keystore.jks"
+      export KAFKA_ZOOKEEPER_TLS_TRUSTSTORE_FILE="${TRUSTSTORE_LOCATION}"
+    fi
     {{- end }}
 
     exec /entrypoint.sh /run.sh

@@ -1,12 +1,12 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
-appVersion: 2.3.3
+appVersion: 2.4.8
 dependencies:
   - condition: redis.enabled
     name: redis
     repository: https://charts.bitnami.com/bitnami
-    version: 16.x.x
+    version: 17.x.x
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
@@ -22,12 +22,12 @@ keywords:
   - Devops
   - Kubernetes
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: argo-cd
 sources:
-  - https://github.com/bitnami/bitnami-docker-argo-cd
+  - https://github.com/bitnami/containers/tree/main/bitnami/argo-cd
   - https://github.com/argoproj/argo-cd/
-  - https://github.com/bitnami/bitnami-docker-dex
+  - https://github.com/bitnami/containers/tree/main/bitnami/dex
   - https://github.com/dexidp/dex
-version: 3.2.4
+version: 4.0.6

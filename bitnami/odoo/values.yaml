@@ -68,7 +68,7 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: bitnami/odoo
-  tag: 15.0.20220510-debian-10-r4
+  tag: 15.0.20220810-debian-11-r0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -88,27 +88,27 @@ image:
 
 ## @section Odoo Configuration parameters
 ## Odoo settings based on environment variables
-## ref: https://github.com/bitnami/bitnami-docker-odoo#environment-variables
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/odoo#environment-variables
 ##
 
 ## @param odooEmail Odoo user email
-## ref: https://github.com/bitnami/bitnami-docker-odoo#configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/odoo#configuration
 ##
 odooEmail: user@example.com
 ## @param odooPassword Odoo user password
 ## Defaults to a random 10-character alphanumeric string if not set
-## ref: https://github.com/bitnami/bitnami-docker-odoo#configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/odoo#configuration
 ##
 odooPassword: ""
 ## @param odooSkipInstall Skip Odoo installation wizard
 ##
 odooSkipInstall: false
 ## @param loadDemoData Whether to load demo data for all modules during initialization
-## ref: https://github.com/bitnami/bitnami-docker-odoo#configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/odoo#configuration
 ##
 loadDemoData: false
 ## @param customPostInitScripts Custom post-init.d user scripts
-## ref: https://github.com/bitnami/bitnami-docker-odoo/tree/master/14.0/debian-10/rootfs/post-init.d
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/odoo
 ## NOTE: supported formats are `.sh`, `.sql` or `.php`
 ## NOTE: scripts are exclusively executed during the 1st boot of the container
 ## e.g:
@@ -120,7 +120,7 @@ loadDemoData: false
 ##
 customPostInitScripts: {}
 ## SMTP mail delivery configuration
-## ref: https://github.com/bitnami/bitnami-docker-odoo/#smtp-configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/odoo/#smtp-configuration
 ## @param smtpHost SMTP server host
 ## @param smtpPort SMTP server port
 ## @param smtpUser SMTP username
@@ -318,10 +318,7 @@ tolerations: []
 ## @param topologySpreadConstraints Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods
 ##
-topologySpreadConstraints: {}
-## @param podManagementPolicy Pod management policy for the Odoo statefulset
-##
-podManagementPolicy: Parallel
+topologySpreadConstraints: []
 ## @param priorityClassName Odoo pods' Priority Class Name
 ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 ##
@@ -354,6 +351,13 @@ extraVolumes: []
 ## @param extraVolumeMounts Optionally specify extra list of additional volumeMounts for Odoo container(s)
 ##
 extraVolumeMounts: []
+## @param extraContainerPorts Optionally specify extra list of additional ports for Odoo container(s)
+## e.g:
+## extraContainerPorts:
+##   - name: longpolling
+##     containerPort: 8072
+##
+extraContainerPorts: []
 ## @param sidecars Add additional sidecar containers to the Odoo pod
 ## e.g:
 ## sidecars:
@@ -399,6 +403,12 @@ service:
   ## ref: https://kubernetes.io/docs/user-guide/services/
   ##
   sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
   ## @param service.clusterIP Odoo service Cluster IP
   ## e.g.:
   ## clusterIP: None
@@ -516,6 +526,20 @@ ingress:
   ##       -----END CERTIFICATE-----
   ##
   secrets: []
+  ## @param ingress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: example.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: example-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
 
 ## @section Persistence Parameters
 ##

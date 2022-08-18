@@ -198,9 +198,9 @@ Compile all warnings into a single message, and call fail.
 
 {{/* Validate values of Thanos - Objstore configuration */}}
 {{- define "thanos.validateValues.objstore" -}}
-{{- if and (or .Values.bucketweb.enabled .Values.compactor.enabled .Values.ruler.enabled .Values.storegateway.enabled .Values.receive.enabled) (not (include "thanos.createObjstoreSecret" .)) ( not .Values.existingObjstoreSecret) -}}
+{{- if and (or .Values.bucketweb.enabled .Values.compactor.enabled .Values.ruler.enabled .Values.storegateway.enabled) (not (include "thanos.createObjstoreSecret" .)) ( not .Values.existingObjstoreSecret) -}}
 thanos: objstore configuration
-    When enabling Bucket Web, Compactor, Ruler, Store or Receive Gateway component,
+    When enabling Bucket Web, Compactor, Ruler or Store component,
     you must provide a valid objstore configuration.
     There are three alternatives to provide it:
       1) Provide it using the 'objstoreConfig' parameter
@@ -288,18 +288,23 @@ Usage:
 {{ include "thanos.serviceAccount.name" (dict "component" "bucketweb" "context" $) }}
 */}}
 {{- define "thanos.serviceAccount.name" -}}
-{{- $name := printf "%s-%s" (include "common.names.fullname" .context) .component -}}
-
-{{- if .context.Values.existingServiceAccount -}}
-    {{- $name = .context.Values.existingServiceAccount -}}
-{{- end -}}
-
 {{- $component := index .context.Values .component -}}
-{{- if $component.serviceAccount.existingServiceAccount -}}
-    {{- $name = $component.serviceAccount.existingServiceAccount -}}
+{{- if eq .component "query-frontend" -}}
+{{- $component = index .context.Values "queryFrontend" -}}
+{{- else if eq .component "receive-distributor" -}}
+{{- $component = index .context.Values "receiveDistributor" -}}
 {{- end -}}
-
-{{- printf "%s" $name -}}
+{{- if not (include "thanos.serviceAccount.useExisting" (dict "component" .component "context" .context)) -}}
+    {{- if $component.serviceAccount.create -}}
+        {{ default (printf "%s-%s" (include "common.names.fullname" .context) .component) $component.serviceAccount.name }}
+    {{- else if .context.Values.serviceAccount.create -}}
+        {{ default (include "common.names.fullname" .context) .context.Values.serviceAccount.name  }}
+    {{- else -}}
+        {{ default "default" (coalesce $component.serviceAccount.name .context.Values.serviceAccount.name ) }}
+    {{- end -}}
+{{- else -}}
+    {{ default (printf "%s-%s" (include "common.names.fullname" .context) .component) (coalesce $component.serviceAccount.existingServiceAccount .context.Values.existingServiceAccount) }}
+{{- end -}}
 {{- end -}}
 
 {{/* Service account use existing
@@ -307,6 +312,11 @@ Usage:
 */}}
 {{- define "thanos.serviceAccount.useExisting" -}}
 {{- $component := index .context.Values .component -}}
+{{- if eq .component "query-frontend" -}}
+{{- $component = index .context.Values "queryFrontend" -}}
+{{- else if eq .component "receive-distributor" -}}
+{{- $component = index .context.Values "receiveDistributor" -}}
+{{- end -}}
 {{- if .context.Values.existingServiceAccount -}}
     {{- true -}}
 {{- else if $component.serviceAccount.existingServiceAccount -}}

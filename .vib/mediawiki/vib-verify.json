@@ -32,12 +32,10 @@
       },
       "actions": [
         {
-          "action_id": "trivy",
+          "action_id": "health-check",
           "params": {
-            "threshold": "CRITICAL",
-            "vuln_type": [
-              "OS"
-            ]
+            "endpoint": "lb-mediawiki-http",
+            "app_protocol": "HTTP"
           }
         },
         {

@@ -1,7 +1,7 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
-appVersion: 0.9.8
+appVersion: 0.9.9
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
@@ -20,9 +20,9 @@ keywords:
   - observability
   - wavefront
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: wavefront-hpa-adapter
 sources:
-  - https://github.com/bitnami/bitnami-docker-wavefront-hpa-adapter
-version: 1.1.2
+  - https://github.com/bitnami/containers/tree/main/bitnami/wavefront-hpa-adapter
+version: 1.2.7

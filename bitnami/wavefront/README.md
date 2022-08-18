@@ -24,7 +24,7 @@ This chart will deploy the Wavefront Collector for Kubernetes and Wavefront Prox
 
 You can learn more about the Wavefront and Kubernetes integration [in the official documentation](https://docs.wavefront.com/wavefront_kubernetes.html)
 
-Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This chart has been tested to work with NGINX Ingress, cert-manager, fluentd and Prometheus on top of the [BKPR](https://kubeprod.io/).
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
@@ -112,7 +112,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `collector.enabled`                                         | Setup and enable the Wavefront collector to gather metrics                                                              | `true`                                   |
 | `collector.image.registry`                                  | Wavefront collector Image registry                                                                                      | `docker.io`                              |
 | `collector.image.repository`                                | Wavefront collector Image repository                                                                                    | `bitnami/wavefront-kubernetes-collector` |
-| `collector.image.tag`                                       | Wavefront collector Image tag (immutable tags are recommended)                                                          | `1.10.0-scratch-r8`                      |
+| `collector.image.tag`                                       | Wavefront collector Image tag (immutable tags are recommended)                                                          | `1.11.0-scratch-r9`                      |
 | `collector.image.pullPolicy`                                | Image pull policy                                                                                                       | `IfNotPresent`                           |
 | `collector.image.pullSecrets`                               | Specify docker-registry secret names as an array                                                                        | `[]`                                     |
 | `collector.hostAliases`                                     | Deployment pod host aliases                                                                                             | `[]`                                     |
@@ -138,7 +138,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | `collector.discovery.annotationPrefix`                      | When specified, this replaces `prometheus.io` as the prefix for annotations used to auto-discover Prometheus endpoints  | `""`                                     |
 | `collector.discovery.enableRuntimeConfigs`                  | Whether to enable runtime discovery configurations                                                                      | `true`                                   |
 | `collector.discovery.config`                                | Configuration for rules based auto-discovery                                                                            | `[]`                                     |
-| `collector.controlplane.enabled`                            | Enable metrics for control plane dashboard (default false)                                                              | `false`                                  |
+| `collector.controlplane.enabled`                            | Enable metrics for control plane dashboard                                                                              | `true`                                   |
+| `collector.controlplane.collection.interval`                | The collection interval for the control plane                                                                           | `120s`                                   |
 | `collector.existingConfigmap`                               | Name of existing ConfigMap with collector configuration                                                                 | `""`                                     |
 | `collector.command`                                         | Override default container command (useful when using custom images)                                                    | `[]`                                     |
 | `collector.args`                                            | Override default container args (useful when using custom images)                                                       | `[]`                                     |
@@ -185,7 +186,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `proxy.enabled`                                         | Setup and enable Wavefront proxy to send metrics through                                                                                | `true`                    |
 | `proxy.image.registry`                                  | Wavefront proxy image registry                                                                                                          | `docker.io`               |
 | `proxy.image.repository`                                | Wavefront proxy image repository                                                                                                        | `bitnami/wavefront-proxy` |
-| `proxy.image.tag`                                       | Wavefront proxy image tag (immutable tags are recommended)                                                                              | `11.0.0-debian-10-r11`    |
+| `proxy.image.tag`                                       | Wavefront proxy image tag (immutable tags are recommended)                                                                              | `11.3.0-debian-11-r15`    |
 | `proxy.image.pullPolicy`                                | Wavefront proxy image pull policy                                                                                                       | `IfNotPresent`            |
 | `proxy.image.pullSecrets`                               | Specify docker-registry secret names as an array                                                                                        | `[]`                      |
 | `proxy.hostAliases`                                     | Deployment pod host aliases                                                                                                             | `[]`                      |
@@ -336,6 +337,10 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
 
 ## Upgrading
+
+### To 4.0.0
+
+This major updates the kube-state-metrics subchart to it newest major, 3.0.0, which renames several of its values. For more information on this subchart's major, please refer to [kube-state-metrics upgrade notes](https://github.com/bitnami/charts/tree/master/bitnami/kube-state-metrics#to-300).
 
 ### To 3.0.0
 

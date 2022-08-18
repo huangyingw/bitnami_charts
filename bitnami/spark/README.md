@@ -17,11 +17,11 @@ $ helm install my-release bitnami/spark
 
 ## Introduction
 
-This chart bootstraps an [Apache Spark](https://github.com/bitnami/bitnami-docker-spark) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps an [Apache Spark](https://github.com/bitnami/containers/tree/main/bitnami/spark) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 Apache Spark includes APIs for Java, Python, Scala and R.
 
-Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This Helm chart has been tested on top of [Bitnami Kubernetes Production Runtime](https://kubeprod.io/) (BKPR). Deploy BKPR to get automated TLS certificates, logging and monitoring for your applications.
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
@@ -64,32 +64,35 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Common parameters
 
-| Name                     | Description                                                                                  | Value           |
-| ------------------------ | -------------------------------------------------------------------------------------------- | --------------- |
-| `kubeVersion`            | Force target Kubernetes version (using Helm capabilities if not set)                         | `""`            |
-| `nameOverride`           | String to partially override common.names.fullname template (will maintain the release name) | `""`            |
-| `fullnameOverride`       | String to fully override common.names.fullname template                                      | `""`            |
-| `namespaceOverride`      | String to fully override common.names.namespace                                              | `""`            |
-| `commonLabels`           | Labels to add to all deployed objects                                                        | `{}`            |
-| `commonAnnotations`      | Annotations to add to all deployed objects                                                   | `{}`            |
-| `clusterDomain`          | Kubernetes cluster domain name                                                               | `cluster.local` |
-| `extraDeploy`            | Array of extra objects to deploy with the release                                            | `[]`            |
-| `diagnosticMode.enabled` | Enable diagnostic mode (all probes will be disabled and the command will be overridden)      | `false`         |
-| `diagnosticMode.command` | Command to override all containers in the deployment                                         | `["sleep"]`     |
-| `diagnosticMode.args`    | Args to override all containers in the deployment                                            | `["infinity"]`  |
+| Name                     | Description                                                                                                                                         | Value           |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `kubeVersion`            | Force target Kubernetes version (using Helm capabilities if not set)                                                                                | `""`            |
+| `nameOverride`           | String to partially override common.names.fullname template (will maintain the release name)                                                        | `""`            |
+| `fullnameOverride`       | String to fully override common.names.fullname template                                                                                             | `""`            |
+| `namespaceOverride`      | String to fully override common.names.namespace                                                                                                     | `""`            |
+| `commonLabels`           | Labels to add to all deployed objects                                                                                                               | `{}`            |
+| `commonAnnotations`      | Annotations to add to all deployed objects                                                                                                          | `{}`            |
+| `clusterDomain`          | Kubernetes cluster domain name                                                                                                                      | `cluster.local` |
+| `extraDeploy`            | Array of extra objects to deploy with the release                                                                                                   | `[]`            |
+| `initScripts`            | Dictionary of init scripts. Evaluated as a template.                                                                                                | `{}`            |
+| `initScriptsCM`          | ConfigMap with the init scripts. Evaluated as a template.                                                                                           | `""`            |
+| `initScriptsSecret`      | Secret containing `/docker-entrypoint-initdb.d` scripts to be executed at initialization time that contain sensitive data. Evaluated as a template. | `""`            |
+| `diagnosticMode.enabled` | Enable diagnostic mode (all probes will be disabled and the command will be overridden)                                                             | `false`         |
+| `diagnosticMode.command` | Command to override all containers in the deployment                                                                                                | `["sleep"]`     |
+| `diagnosticMode.args`    | Args to override all containers in the deployment                                                                                                   | `["infinity"]`  |
 
 
 ### Spark parameters
 
-| Name                | Description                                      | Value                 |
-| ------------------- | ------------------------------------------------ | --------------------- |
-| `image.registry`    | Spark image registry                             | `docker.io`           |
-| `image.repository`  | Spark image repository                           | `bitnami/spark`       |
-| `image.tag`         | Spark image tag (immutable tags are recommended) | `3.2.1-debian-10-r78` |
-| `image.pullPolicy`  | Spark image pull policy                          | `IfNotPresent`        |
-| `image.pullSecrets` | Specify docker-registry secret names as an array | `[]`                  |
-| `image.debug`       | Enable image debug mode                          | `false`               |
-| `hostNetwork`       | Enable HOST Network                              | `false`               |
+| Name                | Description                                      | Value                |
+| ------------------- | ------------------------------------------------ | -------------------- |
+| `image.registry`    | Spark image registry                             | `docker.io`          |
+| `image.repository`  | Spark image repository                           | `bitnami/spark`      |
+| `image.tag`         | Spark image tag (immutable tags are recommended) | `3.3.0-debian-11-r7` |
+| `image.pullPolicy`  | Spark image pull policy                          | `IfNotPresent`       |
+| `image.pullSecrets` | Specify docker-registry secret names as an array | `[]`                 |
+| `image.debug`       | Enable image debug mode                          | `false`              |
+| `hostNetwork`       | Enable HOST Network                              | `false`              |
 
 
 ### Spark master parameters
@@ -130,7 +133,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `master.tolerations`                                     | Spark master tolerations for pod assignment                                                                              | `[]`            |
 | `master.updateStrategy.type`                             | Master statefulset strategy type.                                                                                        | `RollingUpdate` |
 | `master.priorityClassName`                               | master pods' priorityClassName                                                                                           | `""`            |
-| `master.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template | `{}`            |
+| `master.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template | `[]`            |
 | `master.schedulerName`                                   | Name of the k8s scheduler (other than default) for master pods                                                           | `""`            |
 | `master.terminationGracePeriodSeconds`                   | Seconds Redmine pod needs to terminate gracefully                                                                        | `""`            |
 | `master.lifecycleHooks`                                  | for the master container(s) to automate configuration before or after startup                                            | `{}`            |
@@ -159,7 +162,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `master.customLivenessProbe`                             | Custom livenessProbe that overrides the default one                                                                      | `{}`            |
 | `master.customReadinessProbe`                            | Custom readinessProbe that overrides the default one                                                                     | `{}`            |
 | `master.customStartupProbe`                              | Custom startupProbe that overrides the default one                                                                       | `{}`            |
-| `master.sidecars`                                        | Add additional sidecar containers to the master pod(s)                                                                   | `{}`            |
+| `master.sidecars`                                        | Add additional sidecar containers to the master pod(s)                                                                   | `[]`            |
 | `master.initContainers`                                  | Add initContainers to the master pods.                                                                                   | `[]`            |
 
 
@@ -207,7 +210,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `worker.updateStrategy.type`                             | Worker statefulset strategy type.                                                                                        | `RollingUpdate` |
 | `worker.podManagementPolicy`                             | Statefulset Pod Management Policy Type                                                                                   | `OrderedReady`  |
 | `worker.priorityClassName`                               | worker pods' priorityClassName                                                                                           | `""`            |
-| `worker.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template | `{}`            |
+| `worker.topologySpreadConstraints`                       | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template | `[]`            |
 | `worker.schedulerName`                                   | Name of the k8s scheduler (other than default) for worker pods                                                           | `""`            |
 | `worker.terminationGracePeriodSeconds`                   | Seconds Redmine pod needs to terminate gracefully                                                                        | `""`            |
 | `worker.lifecycleHooks`                                  | for the worker container(s) to automate configuration before or after startup                                            | `{}`            |
@@ -236,7 +239,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `worker.customLivenessProbe`                             | Custom livenessProbe that overrides the default one                                                                      | `{}`            |
 | `worker.customReadinessProbe`                            | Custom readinessProbe that overrides the default one                                                                     | `{}`            |
 | `worker.customStartupProbe`                              | Custom startupProbe that overrides the default one                                                                       | `{}`            |
-| `worker.sidecars`                                        | Add additional sidecar containers to the worker pod(s)                                                                   | `{}`            |
+| `worker.sidecars`                                        | Add additional sidecar containers to the worker pod(s)                                                                   | `[]`            |
 | `worker.initContainers`                                  | Add initContainers to the worker pods.                                                                                   | `[]`            |
 | `worker.autoscaling.enabled`                             | Enable replica autoscaling depending on CPU                                                                              | `false`         |
 | `worker.autoscaling.minReplicas`                         | Minimum number of worker replicas                                                                                        | `""`            |
@@ -297,6 +300,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `ingress.extraPaths`               | Any additional arbitrary paths that may need to be added to the ingress under the main host.                                     | `[]`                     |
 | `ingress.extraTls`                 | The tls configuration for additional hostnames to be covered with this ingress record.                                           | `[]`                     |
 | `ingress.secrets`                  | If you're providing your own certificates, please use this to add the certificates as secrets                                    | `[]`                     |
+| `ingress.extraRules`               | Additional rules to be covered with this ingress record                                                                          | `[]`                     |
 
 
 ### Other parameters
@@ -463,7 +467,7 @@ This version standardizes the way of defining Ingress rules. When configuring a 
 
 - This version introduces `bitnami/common`, a [library chart](https://helm.sh/docs/topics/library_charts/#helm) as a dependency. More documentation about this new utility could be found [here](https://github.com/bitnami/charts/tree/master/bitnami/common#bitnami-common-library-chart). Please, make sure that you have updated the chart dependencies before executing any upgrade.
 
-- Spark container images are updated to use Hadoop `3.2.x`: [Notable Changes: 3.0.0-debian-10-r44](https://github.com/bitnami/bitnami-docker-spark#300-debian-10-r44)
+- Spark container images are updated to use Hadoop `3.2.x`: [Notable Changes: 3.0.0-debian-10-r44](https://github.com/bitnami/containers/tree/main/bitnami/spark#300-debian-10-r44)
 
 > Note: Backwards compatibility is not guaranteed due to the above mentioned changes. Please make sure your workloads are compatible with the new version of Hadoop before upgrading. Backups are always recommended before any upgrade operation.
 
